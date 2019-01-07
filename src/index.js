@@ -16,7 +16,6 @@ app.get('/', (req,res)=>{
 
 
 
-
 require('./controllers/authController')(app);
 require('./controllers/vehicle/mnfController')(app);
 require('./controllers/addController')(app);
