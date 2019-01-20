@@ -6,7 +6,7 @@ autoIncrement.initialize(mongoose);
 
 
 
-const MnfSchema = new mongoose.Schema({
+const VhcSchema = new mongoose.Schema({
     "name":{
         type:String,
 
@@ -51,8 +51,8 @@ const MnfSchema = new mongoose.Schema({
 
 
 
-MnfSchema.plugin(autoIncrement.plugin, 'MnfCod');
-var MnfCod = mongoose.model('MnfCod', MnfSchema);
-const Mnf = mongoose.model('c550mnf', MnfSchema);
+VhcSchema.plugin(autoIncrement.plugin, 'VhcCod');
+var MnfCod = mongoose.model('VhcCod', VhcSchema);
+const Vhc = mongoose.model('c551vhc', VhcSchema);
 
-module.exports = Mnf;
+module.exports = Vhc;
