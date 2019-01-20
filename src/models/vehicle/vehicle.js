@@ -2,7 +2,11 @@ const mongoose = require('../../dataBase');
 autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose);
 
-const MncSchema = new mongoose.Schema({
+
+
+
+
+const MnfSchema = new mongoose.Schema({
     "name":{
         type:String,
 
@@ -13,8 +17,8 @@ const MncSchema = new mongoose.Schema({
 
 
     },
-    "order":{
-        type: Number,
+    "marca":{
+        type: String,
 
 
 
@@ -31,15 +35,24 @@ const MncSchema = new mongoose.Schema({
 
 
     },
+    fipe_marca:{
+        type: String,
+
+
+
+    },
 
     "createdAt":{
         type : Date,
         default: Date.now,
     },
-},{collection: 'C551MNC'});
+},{collection: 'C551VHC'});
 
-MncSchema.plugin(autoIncrement.plugin, 'MncCod');
-var MncCod = mongoose.model('MncCod', MncSchema);
-const Mnc = mongoose.model('c551mnc', MncSchema);
 
-module.exports = Mnc;
+
+
+MnfSchema.plugin(autoIncrement.plugin, 'MnfCod');
+var MnfCod = mongoose.model('MnfCod', MnfSchema);
+const Mnf = mongoose.model('c550mnf', MnfSchema);
+
+module.exports = Mnf;
