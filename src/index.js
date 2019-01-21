@@ -1,5 +1,6 @@
 const express = require('express');
 const  bodyParser = require('body-parser');
+const { promisify } = require('util');
 
 
 const app = express();
@@ -27,12 +28,15 @@ require('./controllers/prtController')(app);
 require('./controllers/sipController')(app);
 require('./controllers/cvnController')(app);
 require('./controllers/csvController')(app);
+require('./controllers/usrController')(app);
 
 
 
 
-const port = process.env.PORT || 3005;
+const startServer = async () => {
+    const port = process.env.SERVER_PORT || 3005;
+    await promisify(app.listen).bind(app)(port);
+    console.log(`Listening on port ${port}`)
+};
 
-app.listen(port,()=>console.log('listen'+ port));
-
-
+startServer();

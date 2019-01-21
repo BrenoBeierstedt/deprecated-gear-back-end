@@ -29,6 +29,10 @@ const CsvSchema = new mongoose.Schema({
     CsvEst:{
         type: Number,
     },
+    createdAt:{
+        type : Date,
+        default: Date.now,
+    },
 
 
 },{collection: 'C300CSV'});

@@ -6,6 +6,8 @@ const router = express.Router();
 
 const Jwt = require('jsonwebtoken');
 
+
+
 router.post('/login/:username/:password', async (req,res)=> {
 
     const username = req.params.username;
@@ -25,7 +27,7 @@ router.post('/login/:username/:password', async (req,res)=> {
         }else {
 
             if ((doc.username === username) && (doc.password === password)) {
-               Jwt.sign({username, password}, 'secret',(err,token)=>{
+               Jwt.sign({username, password}, 'secret',{ expiresIn: '7d'},(err,token)=>{
                    res.json({
                        token
                    })

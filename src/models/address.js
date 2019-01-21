@@ -1,5 +1,8 @@
 const mongoose = require('../dataBase');
 
+autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
+
 const AddSchema = new mongoose.Schema({
     AddZip:{
         type:Number,
@@ -24,6 +27,9 @@ const AddSchema = new mongoose.Schema({
     }
 
 },{collection: 'C500ADD'});
+
+AddSchema.plugin(autoIncrement.plugin, 'AddCod');
+var AddCod = mongoose.model('AddCod', AddSchema);
 
 const Add = mongoose.model('c500add', AddSchema);
 

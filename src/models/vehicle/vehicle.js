@@ -52,7 +52,7 @@ const VhcSchema = new mongoose.Schema({
 
 
 VhcSchema.plugin(autoIncrement.plugin, 'VhcCod');
-var MnfCod = mongoose.model('VhcCod', VhcSchema);
+var VhcCod = mongoose.model('VhcCod', VhcSchema);
 const Vhc = mongoose.model('c551vhc', VhcSchema);
 
 module.exports = Vhc;

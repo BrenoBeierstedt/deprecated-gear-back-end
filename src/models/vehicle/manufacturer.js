@@ -1,41 +1,52 @@
 const mongoose = require('../../dataBase');
+autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose);
 
-const VhcMnfSchema = new mongoose.Schema({
-    name:{
+
+
+
+
+const MnfSchema = new mongoose.Schema({
+    "name":{
         type:String,
-        require:true,
+
     },
-    fipe_name:{
+    "fipe_name":{
         type: String,
 
-        required:true,
+
 
     },
-    order:{
+    "order":{
         type: Number,
 
-        required:true,
+
 
     },
-    key:{
+    "key":{
         type: String,
 
-        required:true,
+
 
     },
-    id:{
+    "id":{
         type: Number,
 
-        required:true,
+
 
     },
 
-    createdAt:{
+    "createdAt":{
         type : Date,
         default: Date.now,
     },
 },{collection: 'C550MNF'});
 
-const VhcMnf = mongoose.model('c550mnf', VhcMnfSchema);
 
-module.exports = VhcMnf;
+
+
+MnfSchema.plugin(autoIncrement.plugin, 'MnfCod');
+var MnfCod = mongoose.model('MnfCod', MnfSchema);
+const Mnf = mongoose.model('c550mnf', MnfSchema);
+
+module.exports = Mnf;

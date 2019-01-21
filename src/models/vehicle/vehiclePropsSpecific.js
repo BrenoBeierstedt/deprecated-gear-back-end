@@ -7,7 +7,7 @@ autoIncrement.initialize(mongoose);
 
 
 const VhpSchema = new mongoose.Schema({
-    "fipe_marca":{
+    "referencia":{
         type:String,
 
     },
@@ -21,7 +21,25 @@ const VhpSchema = new mongoose.Schema({
 
 
     },
+    "combustivel":{
+        type: Number,
+
+
+
+    },
     "marca":{
+        type: String,
+
+
+
+    },
+    "ano_modelo":{
+        type: Number,
+
+
+
+    },
+    "preco":{
         type: Number,
 
 
@@ -33,8 +51,20 @@ const VhpSchema = new mongoose.Schema({
 
 
     },
-    "id":{
+    "time":{
+        type: Number,
+
+
+
+    },
+    "veiculo":{
         type: String,
+
+
+
+    },
+    "id":{
+        type: Number,
 
 
 
