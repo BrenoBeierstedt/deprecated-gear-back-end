@@ -2,16 +2,18 @@ const express = require('express');
 
 const Cus = require('../models/customer');
 
-
-
-
-
-
-
-
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();
+
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
+
 
 
 //create
@@ -20,28 +22,27 @@ router.post('/customer',verifyToken, async (req,res)=> {
 
     jwt.verify(req.token, 'secret',(err,authData)=> {
         if (err) {
-            res.status(403).json('Authorization not found');
+          res.status(403).json('Authorization not found');
             console.log('Authorization not found');
 
-        } else {
-            const add = new CUs(req.body);
+       } else {
 
-            add
-                .save()
-                .then(result => {
-                    console.log(result);
-
-
-                })
-                .catch(err => {
-                    console.log("Problem creating new document");
+           // const body = JSON.parse(req.body);
+            Cus.create(req.body, function (err, doc) {
+                if(err){
+                    console.log("Problem creating new document", err);
                     return res.status(500);
 
+                }
+
+                res.status(201).json({
+                    message: "Succefully created",
+                    createdCommon: doc
                 });
-            res.status(201).json({
-                message: "Succefully created",
-                createdCommon: add
-            })
+
+           });
+
+
         }
     });
 });
@@ -56,7 +57,7 @@ router.put('/customer/:id',verifyToken,async (req, res)=> {
             console.log('Authorization not found');
         } else {
 
-            CUs.findByIdAndUpdate(
+            Cus.findByIdAndUpdate(
                 req.params.id,
                 req.body,
                 {new: true},
@@ -86,7 +87,7 @@ router.delete('/customer/:id',verifyToken, async(req,res)=> {
             console.log('Authorization not found');
         } else {
 
-            CUs.findByIdAndRemove(req.params.id, (err, add) => {
+            Cus.findByIdAndRemove(req.params.id, (err, add) => {
 
 
                 if (err) return res.status(500).send(err);
@@ -113,7 +114,7 @@ router.get('/customer/:id', verifyToken, async (req, res) => {
             console.log('Authorization not found');
         } else {
 
-            CUs.findById(req.params.id, function (err, doc) {
+            Cus.findById(req.params.id, function (err, doc) {
 
                 if (doc) {
                     res.status(200).json(doc);
@@ -136,7 +137,7 @@ router.get('/customer/:id', verifyToken, async (req, res) => {
 
 
 //select all
-
+/*
 router.get('/customer', verifyToken, (req, res) => {
 
 
@@ -164,6 +165,34 @@ router.get('/customer', verifyToken, (req, res) => {
         }
 
     });
+});
+*/
+
+router.get('/customer',  (req, res) => {
+
+
+
+
+
+var query = Cus.find();
+
+query.select('CusNam Cf1Num CusCod CusEma -_id');
+
+query.exec(function (err, doc) {
+    if (err) return handleError(err);
+    if(!doc){
+        res.status(404).send(err);
+    }else {
+
+                    res.status(200).send(doc);
+                }
+
+
+            })
+
+
+
+
 });
 
 
