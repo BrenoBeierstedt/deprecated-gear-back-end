@@ -5,57 +5,67 @@ autoIncrement.initialize(mongoose);
 
 const CusSchema = new mongoose.Schema({
 
+    CusCod:{
+        type: String,
+
+
+
+    },
     CusNam:{
         type: String,
 
         required:true,
 
     },
+    CusSec:{
+        type: Number,
+
+    },
     CusBdy:{
         type: Date,
 
-        required:true,
+
 
     },
     CusTyp:{
         type : String,
-        required:true,
+
 
     },
     CusRed:{
         type : Date,
         default: Date.now,
     },
-    CusSec:{
-        type: Number,
 
-    },
     CusEma:{
         type: String,
     },
     cusCpn:{
         type: String,
     },
-    AddZip:{
-        type:Number,
 
-    },
-    AddCit:{
-        type:String,
+    CusAdd: [{
+        AddZip: {
+            type: Number,
 
-    },
-    AddSta:{
-        type:String,
-    },
-    AddNbh:{
-        type:String,
-    },
-    AddStr:{
-        type:String,
-    },
-    AddCom:{
-        type: String,
-    },
+        },
+        AddCit: {
+            type: String,
+
+        },
+        AddSta: {
+            type: String,
+        },
+        AddNbh: {
+            type: String,
+        },
+        AddStr: {
+            type: String,
+        },
+        AddCom: {
+            type: String,
+        },
+    }],
 
     TelAco:{
         type: Number,
