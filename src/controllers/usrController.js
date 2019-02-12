@@ -5,11 +5,17 @@ const Usr = require('../models/user');
 const router = express.Router();
 
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 router.post('/signup', async (req,res)=> {
 
     const usr = new Usr(req.body);
-console.log(req.body);
+    console.log("usr",usr);
+console.log("body",req.body);
     usr
         .save()
         .then(result => {
