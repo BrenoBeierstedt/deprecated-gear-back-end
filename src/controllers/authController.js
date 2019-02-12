@@ -2,16 +2,20 @@ const express = require('express');
 
 const User = require('../models/user');
 
-const router = express.Router();
+const router = express();
 
 const Jwt = require('jsonwebtoken');
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
+router.post('/login', async (req,res)=> {
 
-router.post('/login/:username/:password', async (req,res)=> {
-
-    const username = req.params.username;
-    const password = req.params.password;
+    const username = req.body.login;
+    const password = req.body.password;
 
 
    var query= User.findOne({username, password});
