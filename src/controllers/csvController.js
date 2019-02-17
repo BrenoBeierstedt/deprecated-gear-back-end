@@ -1,5 +1,4 @@
 
-
 const express = require('express');
 const app = express();
 
@@ -9,6 +8,17 @@ const Csv = require('../models/commonService');
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();
+
+const verifyToken = require('./auth/auth');
+
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
+router.use(verifyToken);
 
 
 //create
@@ -166,22 +176,7 @@ router.delete('/common/:id',verifyToken, async(req,res)=> {
 
 
 
-    function verifyToken(req, res, next) {
 
-
-        const bearerHeader = req.headers['authorization'];
-        if (!bearerHeader) {
-            res.status(403).send('Auth required');
-        }
-        if (typeof bearerHeader !== 'undefined') {
-            const bearer = bearerHeader.split(' ');
-            const token = bearer[1];
-            req.token = token;
-
-            next();
-        }
-
-    }
 
 
 
