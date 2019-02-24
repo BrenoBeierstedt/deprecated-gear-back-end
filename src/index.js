@@ -17,21 +17,22 @@ app.get('/', (req,res)=>{
 
 
 
-require('./controllers/authController')(app);
-require('./controllers/vehicle/mnfController')(app);
-require('./controllers/addController')(app);
-require('./controllers/empController')(app);
-require('./controllers/cusController')(app);
-require('./controllers/pvdController')(app);
-require('./controllers/proController')(app);
-require('./controllers/prtController')(app);
-require('./controllers/sipController')(app);
-require('./controllers/cvnController')(app);
-require('./controllers/csvController')(app);
-require('./controllers/usrController')(app);
+require('./controllers/auth/authController')(app);
+require('./controllers/vehicle/api/mnfController')(app);
+require('./controllers/address/addController')(app);
+require('./controllers/employee/empController')(app);
+require('./controllers/customer/cusController')(app);
+
+require('./controllers/provider/pvdController')(app);
+require('./controllers/inventory/product/proController')(app);
+require('./controllers/inventory/part/prtController')(app);
+require('./controllers/service/inProgress/sipController')(app);
+require('./controllers/vehicle/customerVehicle/cvnController')(app);
+require('./controllers/service/commonService/csvController')(app);
+require('./controllers/login/usrController')(app);
 
 
-
+require('./controllers/customer/searchTest')(app);
 
 const startServer = async () => {
     const port = process.env.SERVER_PORT || 3005;

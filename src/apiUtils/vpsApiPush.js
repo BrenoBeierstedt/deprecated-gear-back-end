@@ -1,5 +1,5 @@
 
-const Vhc = require('../models/vehicle/vehicle');
+const Vhc = require('../models/vehicle/apiFetch/vehicle');
 
 
 const Request = require("request");

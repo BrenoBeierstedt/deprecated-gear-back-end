@@ -1,5 +1,5 @@
 
-const Mnf = require('../models/vehicle/manufacturer');
+const Mnf = require('../models/vehicle/apiFetch/manufacturer');
 
 
 const Request = require("request");

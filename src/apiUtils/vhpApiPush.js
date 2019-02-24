@@ -1,5 +1,5 @@
 
-const Vhp = require('../models/vehicle/vehicleProps');
+const Vhp = require('../models/vehicle/apiFetch/vehicleProps');
 
 
 const Request = require("request");
@@ -12,7 +12,7 @@ const sortByID = require('./sortById.js');
 
 
 
-//todo create push to another parts of API
+
 
 Request.get("http://fipeapi.appspot.com/api/1/carros/marcas.json", function (err, response, body) {
     if (err) {

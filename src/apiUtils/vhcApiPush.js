@@ -1,5 +1,5 @@
 
-const Vhc = require('../models/vehicle/manufacturer');
+const Vhc = require('../models/vehicle/apiFetch/manufacturer');
 const findMax = require('./vhcFindMaxId');
 
 const Request = require("request");
