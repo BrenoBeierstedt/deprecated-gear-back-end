@@ -6,9 +6,10 @@ autoIncrement.initialize(mongoose);
 const CusSchema = new mongoose.Schema({
 
     CusCod:{
-        type: String,
+        type: Number,
 autoIncrement: true,
-
+        unique: true,
+        startAt: 2000,
 
     },
     CusNam:{
@@ -90,8 +91,13 @@ autoIncrement: true,
 
 },{collection: 'C050CUS'});
 
+
+
 CusSchema.plugin(autoIncrement.plugin, 'CusCod');
 var CusCod = mongoose.model('CusCod', CusSchema);
+
+CusSchema.plugin(autoIncrement.plugin, { model: 'Customer', field: 'CusCod' });
+
 
 const Cus = mongoose.model('c050cus', CusSchema);
 

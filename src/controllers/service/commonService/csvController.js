@@ -23,7 +23,7 @@ router.use(verifyToken);
 
 //create
 
-router.post('/commonService',verifyToken, async (req,res)=> {
+router.post('/csv',verifyToken, async (req,res)=> {
 
     jwt.verify(req.token, 'secret',(err,authData)=> {
         if (err) {
@@ -55,7 +55,7 @@ router.post('/commonService',verifyToken, async (req,res)=> {
 
 //alter
 
-router.put('/commonService/:id',verifyToken,async (req, res)=> {
+router.put('/csv/:id',verifyToken,async (req, res)=> {
 
     jwt.verify(req.token, 'secret', (err, authData) => {
         if (err) {
@@ -86,7 +86,7 @@ router.put('/commonService/:id',verifyToken,async (req, res)=> {
 
 //delete
 
-router.delete('/commonService/:id',verifyToken, async(req,res)=> {
+router.delete('/csv/:id',verifyToken, async(req,res)=> {
     jwt.verify(req.token, 'secret', (err, authData) => {
         if (err) {
             res.status(403).json('Authorization not found');
@@ -111,40 +111,25 @@ router.delete('/commonService/:id',verifyToken, async(req,res)=> {
 });
 
 
-//select by id
-    router.get('/commonService/:id', verifyToken, async (req, res) => {
+router.get('/csv/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
 
-        jwt.verify(req.token, 'secret', (err, authData) => {
-            if (err) {
-                res.status(403).json('Authorization not found');
-                console.log('Authorization not found');
-            } else {
-
-                Csv.findById(req.params.id, function (err, doc) {
-
-                    if (doc) {
-                        res.status(200).json(doc);
-                    } else {
-                        res.status(404).json({
-                            message: 'ID not valid'
-                        })
-                    }
-
-
-                })
-                    .catch(err => {
-                        return res.status(500).json({error: err});
-                    })
+    Csv.find({
+            CsvDes:{
+                $regex :new RegExp(q),
+                $options:'i'
             }
-
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
         });
-
-    });
+});
 
 
 //select all
 
-    router.get('/commonService', verifyToken, (req, res) => {
+    router.get('/csv', verifyToken, (req, res) => {
 
 
         jwt.verify(req.token, 'secret', (err, authData) => {

@@ -9,29 +9,45 @@ const SipSchema = new mongoose.Schema({
     },
 
     SipCus:{
-        type: Number
+        type: String
 
     },
     SipVhc:{
         type: Number,
 
     },
-    SipOdm:{
-        type: Number
+    CvnPlt:{
+        type: String,
 
+    },
+    MdlNam:{
+        type: String,
+    },
+    SipOdm:{
+        type: String
+
+    },
+    svcSts: {
+        type: String,
+    },
+    SipStt: {
+        type: String,
     },
 
     SipAtk:{
-        type: Number,
+        type: String,
     },
     SipAcc:{
-        type: String,
+        type: Array,
     },
     SipIss:{
-        type: String,
+        type: Array,
     },
     SipObs:{
-        type: String,
+        type: Array,
+    },
+    SipDgn:{
+        type: Array,
     },
     SipMch:{
         type: Number,
@@ -40,6 +56,9 @@ const SipSchema = new mongoose.Schema({
         type: Number,
     },
     CsvCod:{
+        type: Number,
+    },
+    CvnID:{
         type: Number,
     },
     SipInd:{
@@ -87,9 +106,6 @@ const SipSchema = new mongoose.Schema({
         svcPrice: {
             type: Number,
         },
-        svcSts: {
-            type: Number,
-        },
 
     }],
 
@@ -100,6 +116,6 @@ const SipSchema = new mongoose.Schema({
 SipSchema.plugin(autoIncrement.plugin, 'SipCod');
 var SipCod = mongoose.model('SipCod', SipSchema);
 
-const Sip = mongoose.model('c350sip', SipSchema);
+const Sip = mongoose.model('C350SIP', SipSchema);
 
 module.exports = Sip;

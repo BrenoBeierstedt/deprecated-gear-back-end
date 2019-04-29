@@ -107,36 +107,41 @@ router.delete('/costumervehicle/:id',verifyToken, async(req,res)=> {
 });
 
 
-//select by id
-router.get('/costumervehicle/:id', verifyToken, async (req, res) => {
-
-    jwt.verify(req.token, 'secret', (err, authData) => {
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Cvn.findById(req.params.id, function (err, doc) {
-
-                if (doc) {
-                    res.status(200).json(doc);
-                } else {
-                    res.status(404).json({
-                        message: 'ID not valid'
-                    })
-                }
+//select by custuomer id
 
 
-            })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                })
-        }
-
-    });
-
+router.get('/cvn/:CusCod/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
+var cusCod = req.params.CusCod;
+console.log(cusCod)
+    Cvn.find({
+            CvnPlt:{
+                $regex :new RegExp(q),
+                $options:'i'
+            },
+        CusCod:cusCod
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
 });
 
+router.get('/cvn/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
+
+
+    Cvn.find({
+            CvnPlt:{
+                $regex :new RegExp(q),
+                $options:'i'
+            },
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
+});
 
 //select all
 

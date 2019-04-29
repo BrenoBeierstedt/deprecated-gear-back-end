@@ -107,34 +107,19 @@ router.delete('/part/:id',verifyToken, async(req,res)=> {
 });
 
 
-//select by id
-router.get('/part/:id', verifyToken, async (req, res) => {
+router.get('/parts/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
 
-    jwt.verify(req.token, 'secret', (err, authData) => {
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Prt.findById(req.params.id, function (err, doc) {
-
-                if (doc) {
-                    res.status(200).json(doc);
-                } else {
-                    res.status(404).json({
-                        message: 'ID not valid'
-                    })
-                }
-
-
-            })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                })
-        }
-
-    });
-
+    Prt.find({
+            PrtDes:{
+                $regex :new RegExp(q),
+                $options:'i'
+            }
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
 });
 
 

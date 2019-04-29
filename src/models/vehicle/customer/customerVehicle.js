@@ -8,13 +8,37 @@ const CvnSchema = new mongoose.Schema({
         type:Number,
 
     },
+    CusCod:{
+        type:Number,
+
+    },
+    CusNam:{
+        type:String,
+
+    },
     MdlCod:{
         type:Number,
 
     },
+    MdlNam:{
+        type:String,
+
+    },
+    CvnFtp:{
+        type:String,
+
+    },
+    CvnFby:{
+        type:String,
+
+    },
+    CvnMdy:{
+        type:String,
+
+    },
 
     CvnCch:{
-        type:Number,
+        type:String,
 
     },
     CvnPlt:{
@@ -30,6 +54,10 @@ const CvnSchema = new mongoose.Schema({
 
     },
     CvnFdr:{
+        type:String,
+
+    },
+    MnfNam:{
         type:String,
 
     },

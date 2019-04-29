@@ -21,6 +21,10 @@ const PrtSchema = new mongoose.Schema({
         type:String,
 
     },
+    PrtDer:{
+        type:String,
+
+    },
     PrtNum:{
         type:Number,
 

@@ -7,6 +7,18 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 
 
+
+const verifyToken = require('../../../gearUtils/auth');
+
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+router.use(verifyToken);
+
+
 //create
 
 router.post('/manufacturer',verifyToken, async (req,res)=> {
@@ -97,35 +109,7 @@ router.delete('/manufacturer/:id',verifyToken, async(req,res)=> {
 });
 
 
-//select by id
-router.get('/manufacturer/:id', verifyToken, async (req, res) => {
 
-    jwt.verify(req.token, 'secret', (err, authData) => {
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Mnf.findById(req.params.id, function (err, doc) {
-
-                if (doc) {
-                    res.status(200).json(doc);
-                } else {
-                    res.status(404).json({
-                        message: 'ID not valid'
-                    })
-                }
-
-
-            })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                })
-        }
-
-    });
-
-});
 
 
 //select all
@@ -160,22 +144,21 @@ router.get('/manufacturer', verifyToken, (req, res) => {
 });
 
 
-function verifyToken(req, res, next) {
 
+router.get('/mnf/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
+    Mnf.find({
+            name:{
+                $regex :new RegExp(q),
+                $options:'i'
+            }
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
+});
 
-    const bearerHeader = req.headers['authorization'];
-    if (!bearerHeader) {
-        res.status(403).send('Auth required');
-    }
-    if (typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(' ');
-        const token = bearer[1];
-        req.token = token;
-
-        next();
-    }
-
-}
 
 
 

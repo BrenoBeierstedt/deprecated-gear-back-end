@@ -1,10 +1,11 @@
 const express = require('express');
 
-const Sip = require('../../../models/service/inProgress/serviceInProgress');
+
+const Vhp = require('../../../models/vehicle/apiFetch/vehicle');
 
 const jwt = require('jsonwebtoken');
 
-const router = express.Router();
+const router = express();
 
 const verifyToken = require('../../../gearUtils/auth');
 
@@ -17,41 +18,41 @@ router.use(function(req, res, next) {
 
 router.use(verifyToken);
 
+
 //create
 
-router.post('/sip',verifyToken, async (req,res)=> {
+router.post('/vhp',verifyToken, async (req,res)=> {
 
     jwt.verify(req.token, 'secret',(err,authData)=> {
         if (err) {
-            res.status(403).json('Authorization not found');
+          res.status(403).json('Authorization not found');
             console.log('Authorization not found');
 
-        } else {
-            const add = new Sip(req.body);
+       } else {
 
-            add
-                .save()
-                .then(result => {
-                    console.log(result);
-
-
-                })
-                .catch(err => {
-                    console.log("Problem creating new document");
+           // const body = JSON.parse(req.body);
+            Vhp.create(req.body, function (err, doc) {
+                if(err){
+                    console.log("Problem creating new document", err);
                     return res.status(500);
 
+                }
+
+                res.status(201).json({
+                    message: "Succefully created",
+                    createdCommon: doc
                 });
-            res.status(201).json({
-                message: "Succefully created",
-                createdCommon: add
-            })
+
+           });
+
+
         }
     });
 });
 
 //alter
 
-router.put('/sip/:id',verifyToken,async (req, res)=> {
+router.put('/vhp/:id',verifyToken,async (req, res)=> {
 
     jwt.verify(req.token, 'secret', (err, authData) => {
         if (err) {
@@ -59,7 +60,7 @@ router.put('/sip/:id',verifyToken,async (req, res)=> {
             console.log('Authorization not found');
         } else {
 
-            Sip.findByIdAndUpdate(
+            Vhp.findByIdAndUpdate(
                 req.params.id,
                 req.body,
                 {new: true},
@@ -69,7 +70,7 @@ router.put('/sip/:id',verifyToken,async (req, res)=> {
                         message: "Succefully updated ",
                         updatedtedCommon: add
                     };
-                    console.log("Alter on C350SIP ID:", req.params.id, "by:", authData.username);
+                    console.log("Alter on C400CVN ID:", req.params.id, "by:", authData.username);
                     return res.status(200).send(response);
                 });
         }
@@ -82,14 +83,14 @@ router.put('/sip/:id',verifyToken,async (req, res)=> {
 
 //delete
 
-router.delete('/sip/:id',verifyToken, async(req,res)=> {
+router.delete('/vhp/:id',verifyToken, async(req,res)=> {
     jwt.verify(req.token, 'secret', (err, authData) => {
         if (err) {
             res.status(403).json('Authorization not found');
             console.log('Authorization not found');
         } else {
 
-            Sip.findByIdAndRemove(req.params.id, (err, add) => {
+            Vhp.findByIdAndRemove(req.params.id, (err, add) => {
 
 
                 if (err) return res.status(500).send(err);
@@ -106,9 +107,16 @@ router.delete('/sip/:id',verifyToken, async(req,res)=> {
     });
 });
 
-router.get('/sip/:id', verifyToken, (req, res) => {
 
-let id = req.params.id;
+
+
+
+
+//select all
+
+router.get('/vhp', verifyToken, (req, res) => {
+
+
     jwt.verify(req.token, 'secret', (err, authData) => {
 
 
@@ -117,9 +125,8 @@ let id = req.params.id;
             console.log('Authorization not found');
         } else {
 
-            Sip.findOne({_id:id}, function (err, doc) {
+            Vhp.find({}, function (err, doc) {
                 if (doc) {
-                    console.log(doc)
                     res.status(200).send(doc);
                 } else {
                     res.status(404).send(err)
@@ -136,36 +143,27 @@ let id = req.params.id;
     });
 });
 
-//SipStt
-
-router.get('/counter/sip', verifyToken, (req, res) => {
-
-
-    jwt.verify(req.token, 'secret', (err, authData) => {
-
-
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Sip.find({SipStt:"IPG"}).count(function (err, count) {
-
-
-
-                res.send(JSON.stringify(count))
-            })
-
-        }
-    });
-
+router.get('/vhp/:name/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
+    var name = req.params.name;
+    Vhp.find({
+            name:{
+                $regex :new RegExp(q),
+                $options:'i'
+            },
+            marca:name
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
 });
 
-router.get('/l/sip/search', verifyToken,function(req,res,next){
+router.get('/vhp/search', verifyToken,function(req,res,next){
     var q = req.query.q;
 
-    Sip.find({
-            SipCus:{
+    Vhp.find({
+            name:{
                 $regex :new RegExp(q),
                 $options:'i'
             }
@@ -176,37 +174,6 @@ router.get('/l/sip/search', verifyToken,function(req,res,next){
         });
 });
 
-
-//select all
-
-router.get('/sip', verifyToken, (req, res) => {
-
-
-    jwt.verify(req.token, 'secret', (err, authData) => {
-
-
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Sip.find({}, function (err, doc) {
-                if (doc) {
-                    res.status(200).send(doc);
-                } else {
-                    res.status(404).send(err)
-                }
-
-
-            })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                })
-
-        }
-
-    });
-});
 
 
 

@@ -19,3 +19,23 @@ module.exports.findMax = function (callback) {
     });
 
     };
+
+
+module.exports.findAll = function (callback) {
+
+    let query = Mnf.find({});
+    query.sort('-id');
+
+    query.select('id -_id');
+
+    query.exec(function (err, doc) {
+
+        if (err) {
+            console.log("something went wrong", err)
+        }
+
+
+        callback (null,doc);
+    });
+
+};

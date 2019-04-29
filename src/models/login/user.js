@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
         type:String,
 
         select:false,
+
     },
     createdAt:{
         type : Date,

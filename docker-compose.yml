@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  gear-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./node_modules/.bin/nodemon -- exec npm start
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3005:3005
+    volumes:
+      - .:/home/app/gear-platform
+      - /home/app/gear-platform/node_modules

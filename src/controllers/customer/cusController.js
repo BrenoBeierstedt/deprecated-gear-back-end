@@ -69,7 +69,7 @@ router.put('/customer/:id',verifyToken,async (req, res)=> {
                         message: "Succefully updated ",
                         updatedtedCommon: add
                     };
-                    console.log("Alter on C400CVN ID:", req.params.id, "by:", authData.username);
+                    console.log("Alter on C400CVN ID:", req.params.id, req.params.CusNam, "by:", authData.username);
                     return res.status(200).send(response);
                 });
         }
@@ -107,35 +107,8 @@ router.delete('/customer/:id',verifyToken, async(req,res)=> {
 });
 
 
-//select by id
-router.get('/customer/:id', verifyToken, async (req, res) => {
-
-    jwt.verify(req.token, 'secret', (err, authData) => {
-        if (err) {
-            res.status(403).json('Authorization not found');
-            console.log('Authorization not found');
-        } else {
-
-            Cus.findById(req.params.id, function (err, doc) {
-
-                if (doc) {
-                    res.status(200).json(doc);
-                } else {
-                    res.status(404).json({
-                        message: 'ID not valid'
-                    })
-                }
 
 
-            })
-                .catch(err => {
-                    return res.status(500).json({error: err});
-                })
-        }
-
-    });
-
-});
 
 
 //select all
@@ -171,7 +144,20 @@ router.get('/customer', verifyToken, (req, res) => {
 
 
 
+router.get('/customer/search', verifyToken,function(req,res,next){
+    var q = req.query.q;
 
+    Cus.find({
+            CusNam:{
+                $regex :new RegExp(q),
+                $options:'i'
+            }
+        },
+        function (err,data) {
+            console.log(err, data);
+            res.json(data);
+        });
+});
 
 
 

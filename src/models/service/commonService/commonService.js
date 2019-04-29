@@ -8,10 +8,7 @@ const CsvSchema = new mongoose.Schema({
         type: Number,
     },
 
-    CsvPrc:{
-        type: Number
 
-    },
     CsvDes:{
         type: String,
 
