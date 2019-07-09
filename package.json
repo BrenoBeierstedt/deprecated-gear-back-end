@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --max-old-space-size=4076NODE ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/nodemon -e",
+    "start-dev": "PORT=80 ./node_modules/.bin/nodemon -e --exec babel-node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seedDb": "./node_modules/.bin/babel-node src/seed/seed-db.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Breno Beierstedt da Rosa",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
@@ -21,5 +23,26 @@
     "npm": "^6.7.0",
     "passport": "^0.4.0",
     "request": "^2.88.0"
+  },
+    "devDependencies": {
+      "babel-cli": "^6.26.0",
+      "babel-preset-env": "^1.7.0",
+      "eslint": "^5.16.0",
+      "eslint-config-standard": "^12.0.0",
+      "eslint-plugin-import": "^2.17.2",
+      "eslint-plugin-node": "^8.0.1",
+      "eslint-plugin-promise": "^4.1.1",
+      "eslint-plugin-standard": "^4.0.0",
+      "husky": "^2.2.0",
+      "lint-staged": "^8.1.5",
+      "eslint": "^5.16.0",
+      "eslint-config-standard": "^12.0.0",
+      "eslint-plugin-import": "^2.17.2",
+      "eslint-plugin-node": "^8.0.1",
+      "eslint-plugin-promise": "^4.1.1",
+      "eslint-plugin-standard": "^4.0.0",
+      "lint-staged": "^8.1.5"
+
+    }
   }
-}
+

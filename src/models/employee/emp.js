@@ -1,4 +1,4 @@
-const mongoose = require('../../dataBase');
+const mongoose = require('../../infra/dataBase');
 
 autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose);

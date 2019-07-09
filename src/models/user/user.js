@@ -1,8 +1,4 @@
-const mongoose = require('../../dataBase');
-
-autoIncrement = require('mongoose-auto-increment');
-autoIncrement.initialize(mongoose);
-
+const mongoose = require('../../infra/dataBase')
 
 
 const UserSchema = new mongoose.Schema({
@@ -13,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     username:{
         type:String,
         require:true,
+        unique:true,
     },
     email:{
        type: String,
@@ -32,9 +29,7 @@ const UserSchema = new mongoose.Schema({
     },
 }, {collection: 'C650USR'});
 
-UserSchema.plugin(autoIncrement.plugin, 'UsrCod');
-var UsrCod = mongoose.model('UsrCod', UserSchema);
 
-const Usr = mongoose.model('C650USR', UserSchema);
+const Usr = mongoose.model('C650USR', UserSchema)
 
-module.exports = Usr;
+module.exports = Usr

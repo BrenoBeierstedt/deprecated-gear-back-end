@@ -1,6 +1,6 @@
 const express = require('express');
 
-const User = require('../../models/login/user');
+const User = require('../../models/user/user');
 
 const router = express();
 
@@ -42,7 +42,7 @@ router.post('/login', async (req,res)=> {
 
 
     })
-     
+
     });
 
 
